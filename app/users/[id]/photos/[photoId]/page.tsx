@@ -8,7 +8,7 @@ const PhotoDetailPage = ({ params: { id, photoId } }: Props) => {
   return (
     <div>
       PhotoDetailPage {id} {photoId}
-    </divf>
+    </div>
   );
 };
 
