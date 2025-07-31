@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { sort } from "fast-sort";
 
 interface User {
   id: number;
@@ -7,10 +8,15 @@ interface User {
   email: string;
 }
 
+interface Props {
+  sortType: string;
+  sortOrder: string;
+}
+
 // Let's keep UsersTable inside users table folder
 // In the future, if we need to use it another page, we can move it to the components folder
 
-const UsersTable = async () => {
+const UsersTable = async ({ sortType, sortOrder }: Props) => {
   // async functions are functions that return a promise
   // we await it because it returns a promise
   // a promise is a value that will be resolved at a later time
@@ -24,6 +30,10 @@ const UsersTable = async () => {
     cache: "no-store",
   });
   const users: User[] = await res.json();
+  const sortOrderReverse = sortOrder && sortOrder === "asc" ? "desc" : "asc";
+  const sortedusers = sort(users).asc(
+    sortType === "email" ? (user) => user.email : (user) => user.name
+  );
   return (
     <>
       <h1>Users</h1>
@@ -31,12 +41,26 @@ const UsersTable = async () => {
         <table className="table table-zebra">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
+              <th>
+                Name{" "}
+                <Link
+                  href={`/users?sortType=name&sortOrder=${sortOrderReverse}`}
+                >
+                  Sort
+                </Link>
+              </th>
+              <th>
+                Email{" "}
+                <Link
+                  href={`/users?sortType=email&sortOrder=${sortOrderReverse}`}
+                >
+                  Sort
+                </Link>
+              </th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {sortedusers.map((user) => (
               <tr key={user.id}>
                 <td>
                   <Link href={`users/${user.id}`}>{user.name}</Link>
