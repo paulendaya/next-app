@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface User {
@@ -37,7 +38,9 @@ const UsersTable = async () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.name}</td>
+                <td>
+                  <Link href={`users/${user.id}`}>{user.name}</Link>
+                </td>
                 <td>{user.email}</td>
               </tr>
             ))}
