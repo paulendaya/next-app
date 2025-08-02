@@ -3,7 +3,7 @@ import AddToCart from "../AddToCart";
 
 const ProductCart = () => {
   return (
-    <div className="p-4 m-4 bg-blue-500 text-white :hover:bg-blue-700 rounded-lg">
+    <div>
       <AddToCart />
     </div>
   );
