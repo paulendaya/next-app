@@ -9,9 +9,7 @@ interface Props {
 const AdminLayout = ({ children }: Props) => {
   return (
     <div className="flex gap-4">
-      <aside className="bg-slate-200 p-4">
-        <NavBar />
-      </aside>
+      <aside className="bg-slate-200 p-4">Admin Sidebar</aside>
       <main>{children}</main>
     </div>
   );

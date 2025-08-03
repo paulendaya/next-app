@@ -1,5 +1,6 @@
 import React from "react";
 import UsersTable from "./UsersTable";
+import Link from "next/link";
 
 interface Props {
   searchParams: { sortType: string; sortOrder: string }; //
@@ -8,7 +9,10 @@ interface Props {
 const usersPage = ({ searchParams: { sortType, sortOrder } }: Props) => {
   return (
     <>
-      {/* {sortOrder} */}
+      <Link href="/users/new" className="btn my-3">
+        {" "}
+        New User{" "}
+      </Link>
       <UsersTable sortOrder={sortOrder} sortType={sortType} />
     </>
   );
