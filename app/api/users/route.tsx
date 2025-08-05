@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 //PUT - updating data
 //DELETE - deleting data
 
+//GET All
 export function GET(req: NextRequest) {
   // let's keep the req even if we don't use it so NextJS won't cache the response
   const users = [
@@ -16,7 +17,7 @@ export function GET(req: NextRequest) {
   ];
   return NextResponse.json(users);
 }
-
+//Create
 export async function POST(req: NextRequest) {
   const body = await req.json();
   //Validate
