@@ -6,4 +6,4 @@ const schema = z.object({
   email: z.string().email(),
 });
 
-export default schema;
+export default schema; //test comments
