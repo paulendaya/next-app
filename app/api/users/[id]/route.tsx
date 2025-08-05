@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import schema from "./schema";
 interface Props {
   params: { id: number };
 }
@@ -16,9 +17,10 @@ export async function PUT(req: NextRequest, { params }: Props) {
   //Validate the request body
   //If invalid, return a 400 error
   //400 - Bad Request
-  if (!body.name || !body.email)
+  const validation = schema.safeParse(body); //safeParse returns the parsed data or throws an error
+  if (!validation.success)
     return NextResponse.json(
-      { error: "Missing name or email" },
+      { error: validation.error.errors },
       { status: 400 }
     );
 
