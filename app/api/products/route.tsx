@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     );
   //Generate the id
   const newBody = { id: Math.random(), ...body }; //...body means we're copying the object since we can't mutate it
+  //Add the new item to the database
   //Return the response
   return NextResponse.json(newBody, { status: 201 }); //201 - Created
 }
