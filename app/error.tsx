@@ -3,7 +3,7 @@ import React from "react";
 
 interface Props {
   error: Error;
-  reset: () => void;
+  reset: () => void; //Test
 }
 
 const ErrorPage = ({ error, reset }: Props) => {
