@@ -19,6 +19,7 @@ model User {
   email        String   @unique
   name         String
   followers    Int      @default(0)
+  following    Int      @default(0)
   isActive     Boolean  @default(true)
   registeredAt DateTime @default(now())
 }
