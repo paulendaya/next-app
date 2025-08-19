@@ -1,14 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema from "./schema";
+import prisma from "@/prisma/client";
 interface Props {
   params: { id: number };
 }
-//Get single object
+//Get single object - Hardcoded
 // export function GET(req: NextRequest, { params: { id } }: Props) { //use this if you want inline types
-export function GET(req: NextRequest, { params }: Props) {
+/* export function GET(req: NextRequest, { params }: Props) {
   if (params.id > 10)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   return NextResponse.json({ id: 1, name: "John Doe", email: "john@doe.com" });
+} */
+//Get single object - From Database
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } } //we declare here as string because the actual value we get from params is a string
+) {
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }, //then, since our model expect
+  });
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  return NextResponse.json(user);
 }
 
 //Update an object
