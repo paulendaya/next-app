@@ -86,13 +86,38 @@ export async function PUT(
   return NextResponse.json(updatedUser, { status: 200 });
 }
 
-//DELETE an object
-export async function DELETE(req: NextRequest, { params }: Props) {
+//DELETE an object - Hardcoded
+/* export async function DELETE(req: NextRequest, { params }: Props) {
   //Fetch the user from the DB
   //if user doesn't exists, return a 404 error
   if (params.id > 10)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   //DELETE the user
+  //Return a 200 OK response
+  return NextResponse.json(
+    {
+      message: `User ${params.id} deleted`,
+    },
+    { status: 200 }
+  );
+} */
+
+//DELETE an object - Database
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  //Fetch the user from the DB
+  //if user doesn't exists, return a 404 error
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }, //then, since our model expect
+  });
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  //DELETE the user
+  await prisma.user.delete({
+    where: { id: parseInt(params.id) },
+  });
   //Return a 200 OK response
   return NextResponse.json(
     {
