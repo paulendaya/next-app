@@ -24,8 +24,8 @@ export async function GET(
   return NextResponse.json(user);
 }
 
-//Update an object
-export async function PUT(req: NextRequest, { params }: Props) {
+//Update an object - Hardcoded
+/* export async function PUT(req: NextRequest, { params }: Props) {
   const body = await req.json();
   //Validate the request body
   //If invalid, return a 400 error
@@ -51,6 +51,39 @@ export async function PUT(req: NextRequest, { params }: Props) {
     },
     { status: 200 }
   );
+} */
+//Update an object - Database
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const body = await req.json();
+  //Validate the request body
+  const validation = schema.safeParse(body); //safeParse returns the parsed data or throws an error
+  if (!validation.success)
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
+
+  //if user doesn't exists, return a 404 error
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) }, //then, since our model expect
+  });
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  //Update the user
+  const updatedUser = await prisma.user.update({
+    where: { id: parseInt(params.id) },
+    data: {
+      name: body.name,
+      email: body.email,
+      followers: body.followers,
+    },
+  });
+
+  //Return the updated user
+  return NextResponse.json(updatedUser, { status: 200 });
 }
 
 //DELETE an object
