@@ -1,28 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema from "./schema";
+import prisma from "@/prisma/client";
 
-export function GET(req: NextRequest) {
-  return NextResponse.json(
-    [
-      { id: 1, name: "Milk", price: 2.5 },
-      { id: 1, name: "Bread", price: 3.5 },
-    ],
-    { status: 200 }
-  );
+//get all items from the database
+export async function GET(req: NextRequest) {
+  const products = await prisma.product.findMany();
+  return NextResponse.json(products, { status: 200 });
 }
 
+//add a new item to the database
 export async function POST(req: NextRequest) {
+  //get the request body
   const body = await req.json();
-  //Validate
-  const validation = schema.safeParse(body);
+  //validate the request body
+  const validation = schema.safeParse(body); //safeParse returns the parsed data or throws an error
   if (!validation.success)
+    //if the validation fails, return a 400 error
     return NextResponse.json(
       { error: validation.error.errors },
       { status: 400 }
     );
-  //Generate the id
-  const newBody = { id: Math.random(), ...body }; //...body means we're copying the object since we can't mutate it
-  //Add the new item to the database
-  //Return the response
-  return NextResponse.json(newBody, { status: 201 }); //201 - Created
+
+  //add the new item to the database
+  const newProduct = await prisma.product.create({
+    data: {
+      name: body.name,
+      price: body.price,
+    },
+  });
+  //return the response
+  return NextResponse.json(newProduct, { status: 201 });
 }
