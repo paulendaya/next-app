@@ -15,6 +15,7 @@ const UploadPage = () => {
     <>
       {resource && (
         <CldImage
+          className="w-full mb-3 rounded-box"
           width={resource.width}
           height={resource.height}
           src={resource.public_id}
