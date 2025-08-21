@@ -20,6 +20,9 @@ const NavBar = () => {
               <Link href="/about">Media</Link>
             </li>
             <li>
+              <Link href="/upload">Upload</Link>
+            </li>
+            <li>
               <Link href="/about">Contact</Link>
             </li>
           </ul>
