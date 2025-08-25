@@ -24,6 +24,7 @@ const UploadPage = () => {
       )}
       <CldUploadWidget
         uploadPreset="cld-nxtjs-23112"
+        options={{ sources: ["local", "url", "camera"] }}
         onSuccess={(result, { widget }) => {
           if (result.event !== "success") return;
           //widget.close();
