@@ -25,6 +25,9 @@ const NavBar = () => {
             <li>
               <Link href="/about">Contact</Link>
             </li>
+            <li>
+              <Link href="/api/auth/signin">Sign In</Link>
+            </li>
           </ul>
         </nav>
       </div>
