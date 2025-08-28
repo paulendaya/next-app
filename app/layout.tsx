@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
-import { Suspense } from "react";
+import Provider from "./auth/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,15 +19,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <header>
-          <NavBar />
-        </header>
-        <main>
-          {/* here we wrap the whole children in a suspense component
-          one way to show a loading UI */}
-          {/* <Suspense fallback={<div>Loading...</div>}>{children}</Suspense> */}
-          {children}
-        </main>
+        <Provider>
+          {/* we wrap the whole app in the provider component, which is the hook that provides the session data to the app */}
+          <header>
+            <NavBar />
+          </header>
+          <main>
+            {/* here we wrap the whole children in a suspense component
+            one way to show a loading UI */}
+            {/* <Suspense fallback={<div>Loading...</div>}>{children}</Suspense> */}
+            {children}
+          </main>
+        </Provider>
       </body>
     </html>
   );

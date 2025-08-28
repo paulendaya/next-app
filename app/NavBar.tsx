@@ -1,7 +1,10 @@
+"use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const NavBar = () => {
+  const { status, data: session } = useSession(); //this is the hook, a context object, that we use to get the session data, and to use this, it requires us to be in the client side using the "use client" directive
   return (
     <div className=" bg-slate-100 mb-2 ">
       <div className="bh-gov-container">
@@ -25,9 +28,22 @@ const NavBar = () => {
             <li>
               <Link href="/about">Contact</Link>
             </li>
-            <li>
-              <Link href="/api/auth/signin">Sign In</Link>
-            </li>
+            {status === "loading" && <li>Loading...</li>}
+            {status === "authenticated" && (
+              <>
+                <li>
+                  Welcome, <strong>{session.user!.name}</strong>
+                </li>
+                <li>
+                  <Link href="/api/auth/signout">Sign Out</Link>
+                </li>
+              </>
+            )}
+            {status === "unauthenticated" && (
+              <li>
+                <Link href="/api/auth/signin">Sign In</Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
