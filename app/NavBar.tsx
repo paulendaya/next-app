@@ -35,7 +35,8 @@ const NavBar = () => {
                   Welcome, <strong>{session.user!.name}</strong>
                 </li>
                 <li>
-                  <Link href="/api/auth/signout">Sign Out</Link>
+                  <Link href="/api/auth/signout">Sign Out</Link>{" "}
+                  {/* /api/auth/signout is the route that next-auth uses to sign out the user */}
                 </li>
               </>
             )}
