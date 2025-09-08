@@ -32,6 +32,9 @@ const NavBar = () => {
             {status === "authenticated" && (
               <>
                 <li>
+                  <Link href="/dashboard">Dashboard</Link>
+                </li>
+                <li>
                   Welcome, <strong>{session.user!.name}</strong>
                 </li>
                 <li>
