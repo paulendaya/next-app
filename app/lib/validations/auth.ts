@@ -11,4 +11,10 @@ export const registerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 }); // this is the schema for the registration form validation
 
-export type RegisterInput = z.infer<typeof registerSchema>; // this is the type for the registration form validation    
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, "Missing token"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+export type RegisterInput = z.infer<typeof registerSchema>; // this is the type for the registration form validation
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
