@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
 import Provider from "./auth/Provider";
+import ChatBot from "./components/ChatBot";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
             one way to show a loading UI */}
             {/* <Suspense fallback={<div>Loading...</div>}>{children}</Suspense> */}
             {children}
+            <ChatBot />
           </main>
         </Provider>
       </body>

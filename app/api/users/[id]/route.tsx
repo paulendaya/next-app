@@ -17,7 +17,7 @@ export async function GET(
   { params }: { params: { id: string } } //we declare here as string because the actual value we get from params is a string
 ) {
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) }, //then, since our model expect
+    where: { id: params.id }, //then, since our model expect
   });
   if (!user)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -110,13 +110,13 @@ export async function DELETE(
   //Fetch the user from the DB
   //if user doesn't exists, return a 404 error
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) }, //then, since our model expect
+    where: { id: params.id }, //then, since our model expect
   });
   if (!user)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   //DELETE the user
   await prisma.user.delete({
-    where: { id: parseInt(params.id) },
+    where: { id: params.id },
   });
   //Return a 200 OK response
   return NextResponse.json(
